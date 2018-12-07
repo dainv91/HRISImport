@@ -1,0 +1,12 @@
+<scheduledTasks xmlns="http://xmlns.oracle.com/oim/scheduler">
+    <task>
+        <name>hris_import_scheduler</name>
+        <class>vn.iadd.oim.scheduler.Main</class>
+        <description>HRIS import scheduler DaiNV</description>
+        <retry>5</retry>
+        <parameters>
+            <string-param required="true" helpText="Full path of input file. Ex: /home/oracle/file.xlsx">Input File</string-param>
+            <string-param required="false" helpText="Other parameters: key1=value1,key2=value2">Other parameters</string-param>
+        </parameters>
+    </task>
+</scheduledTasks>

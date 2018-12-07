@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="export" name="HRISImport">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../../../setup/x64/eclipse-jee-photon-R-win32-x86_64/"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="HRISImport.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="libs/poi-lib/commons-collections4-4.1.jar"/>
+        <pathelement location="libs/poi-3.17.jar"/>
+        <pathelement location="libs/poi-ooxml-3.17.jar"/>
+        <pathelement location="libs/poi-ooxml-schemas-3.17.jar"/>
+        <pathelement location="libs/ExcelReader_v1.4.jar"/>
+        <pathelement location="libs/ooxml-lib/curvesapi-1.04.jar"/>
+        <pathelement location="libs/ooxml-lib/xmlbeans-2.6.0.jar"/>
+        <pathelement location="libs/oimclient.jar"/>
+    </path>
+	
+	<property name="jar_file" value="output/hris-import-v1.0.jar" />
+	
+	<target name="delete-jar">
+			<delete file="${jar_file}" />
+	</target>
+	<target name="export" depends="delete-jar">
+		<manifest file="bin/MANIFEST.MF">
+			<attribute name="Main-Class" value="vn.iadd.oim.scheduler.Main"/>
+		</manifest>
+		<jar destfile="${jar_file}" basedir="bin" manifest="bin/MANIFEST.MF">
+			<include name="*.properties"/>
+			<include name="**/*.class"/>
+		</jar>
+	</target> 
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="HRISImport.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="MainTest (1)">
+        <java classname="vn.iadd.test.MainTest" failonerror="true" fork="yes">
+            <classpath refid="HRISImport.classpath"/>
+        </java>
+    </target>
+</project>
