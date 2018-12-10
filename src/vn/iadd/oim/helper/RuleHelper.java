@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import oracle.iam.identity.orgmgmt.api.OrganizationManagerConstants;
 import oracle.iam.platform.entitymgr.vo.SearchRule;
 import vn.iadd.excel.model.IWorksheet;
 import vn.iadd.oim.util.EnumUtil;
@@ -35,6 +36,13 @@ public class RuleHelper {
 	private void initData() {
 		mapRows.clear();
 		finalKey = null;
+	}
+	
+	private String processKey(String key) {
+		if (key.equalsIgnoreCase("Organization")) {
+			key = OrganizationManagerConstants.AttributeName.ORG_NAME.getId();//"Organization Name";
+		}
+		return key;
 	}
 	
 	private void parseData(IWorksheet sheet) {
@@ -122,7 +130,8 @@ public class RuleHelper {
 			SearchRule right = toSearchRule(rightInfo);
 			result = new SearchRule(left, right, operator);
 		} else {
-			result = new SearchRule(info.getKey(), info.getValue(), operator);
+			String key = processKey(info.getKey());
+			result = new SearchRule(key, info.getValue(), operator);
 		}
 		return result;
 		
@@ -164,5 +173,9 @@ public class RuleHelper {
 		public boolean isCombine() {
 			return isCombine;
 		}
+	}
+	public static void main(String[] args) {
+		RuleHelper r = new RuleHelper();
+		System.out.println(r.processKey("Organization"));
 	}
 }

@@ -68,6 +68,8 @@ public class MainTest {
 		System.out.println(Boolean.parseBoolean(""));
 		
 		testExcel();
+		//oracle.iam.identity.orgmgmt.api.OrganizationManagerConstants.ORGANIZATION_USER
+		oracle.iam.identity.orgmgmt.api.OrganizationManagerConstants.AttributeName.ORG_NAME.getId();
 	}
 
 }
